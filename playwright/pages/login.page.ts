@@ -7,7 +7,9 @@ export class LoginPage extends BasePage {
     readonly loginPassword: Locator;
     readonly loginButton: Locator;
     readonly url: string;
-    //this appears on successful login, not on page itself. Used for validating login
+    readonly loginError: Locator;
+
+    //appears on successful login, not on page itself. Used for validating login
     readonly displayName: Locator;
 
     constructor(page: Page) {
@@ -16,6 +18,8 @@ export class LoginPage extends BasePage {
         this.loginPassword = page.locator('[data-qa="login-password"]');
         this.loginButton = page.locator('[data-qa="login-button"]');
         this.url = "/login";
+        this.loginError = page.getByText('Your email or password is incorrect!');
+
         this.displayName = page.locator('b');
 
     }
