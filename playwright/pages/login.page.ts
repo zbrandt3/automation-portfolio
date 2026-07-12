@@ -11,6 +11,7 @@ export class LoginPage extends BasePage {
 
     //appears on successful login, not on page itself. Used for validating login
     readonly displayName: Locator;
+    readonly logoutButton: Locator;
 
     constructor(page: Page) {
         super(page);
@@ -21,13 +22,19 @@ export class LoginPage extends BasePage {
         this.loginError = page.getByText('Your email or password is incorrect!');
 
         this.displayName = page.locator('b');
-
+        this.logoutButton = page.locator('a[href="/logout"]')
     }
 
     async login(email: string, password: string) {
+        await this.page.goto(this.url);
         await this.loginEmail.fill(email);
         await this.loginPassword.fill(password);
         await this.loginButton.click();
+    }
+
+    async logout(email: string, password: string) {
+        await this.login(email, password);
+        await this.logoutButton.click();
     }
 }
 
