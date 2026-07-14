@@ -17,10 +17,15 @@ export class RegistrationPage extends BasePage {
     readonly registrationZipCode: Locator;
     readonly registrationPhoneNumber: Locator;
     readonly registrationCreateAccountButton: Locator;
-    //locators are located on initial page to navigate to registration page
+    //locators are located on a different page other than /registration
     readonly registrationSignupName: Locator;
     readonly registrationSignupEmail: Locator;
     readonly registrationSignUpButton: Locator;
+    readonly registrationEmailError: Locator;
+
+    readonly registrationContinue: Locator;
+    readonly registrationDeleteAccount: Locator;
+    readonly registrationDeletionConfirmation: Locator;
 
 
     constructor(page: Page) {
@@ -44,5 +49,9 @@ export class RegistrationPage extends BasePage {
         this.registrationSignupName = page.locator('[data-qa="signup-name"]');
         this.registrationSignupEmail = page.locator('[data-qa="signup-email"]');
         this.registrationSignUpButton = page.locator('[data-qa="signup-button"]');
+        this.registrationEmailError = page.getByText('Email Address already exist!');
+        this.registrationContinue = page.locator('[data-qa="continue-button"]');
+        this.registrationDeleteAccount = page.locator('a[href="/delete_account"]');
+        this.registrationDeletionConfirmation = page.locator('[data-qa="account-deleted"]');
     }
 }

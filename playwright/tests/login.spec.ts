@@ -1,8 +1,11 @@
 import { test, expect } from "../fixtures/test-fixtures";
-import { LoginPage } from "../pages/login.page";
 import { existingUser1 as existingUser } from "../utils/test-users";
 
 test.describe('Validating login', () => {
+    test('home page visibility ', async ({ loginPage }) => {
+        await loginPage.goto('/');
+        await expect(loginPage.logo).toBeVisible();
+    })
     test('invalid login', async ({ loginPage, randomUser }) => {
         await loginPage.goto(loginPage.url);
         await loginPage.login(randomUser.email, randomUser.password);
