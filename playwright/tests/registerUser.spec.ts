@@ -1,34 +1,29 @@
 import { test, expect } from "../fixtures/test-fixtures";
-import { RegistrationPage } from "../pages/registration.page";
 import { existingUser1 as existingUser } from "../utils/test-users";
 
 test.describe("Registering new user", () => {
-    test('Register minimum user', async ({ page, registrationPage, randomUser }) => {
+    test('Register minimum user', async ({ page, registrationPage, registeredUser }) => {
         //signup page to registration page
         await registrationPage.goto('/signup');
-        await registrationPage.registrationSignupEmail.fill(randomUser.email);
-        await registrationPage.registrationSignupName.fill(randomUser.name);
+        await registrationPage.registrationSignupEmail.fill(registeredUser.email);
+        await registrationPage.registrationSignupName.fill(registeredUser.name);
         await registrationPage.registrationSignUpButton.click();
 
         //registration page
-        await registrationPage.registrationPassword.fill(randomUser.password);
-        await registrationPage.registrationFirstName.fill(randomUser.firstName);
-        await registrationPage.registrationLastName.fill(randomUser.lastName);
-        await registrationPage.registrationAddress.fill(randomUser.address);
-        await registrationPage.registrationCountry.selectOption(randomUser.country);
-        await registrationPage.registrationCity.fill(randomUser.city);
-        await registrationPage.registrationState.fill(randomUser.state);
-        await registrationPage.registrationAddress.fill(randomUser.address);
-        await registrationPage.registrationZipCode.fill(randomUser.zipCode);
-        await registrationPage.registrationPhoneNumber.fill(randomUser.phoneNumber);
+        await registrationPage.registrationPassword.fill(registeredUser.password);
+        await registrationPage.registrationFirstName.fill(registeredUser.firstName);
+        await registrationPage.registrationLastName.fill(registeredUser.lastName);
+        await registrationPage.registrationAddress.fill(registeredUser.address);
+        await registrationPage.registrationCountry.selectOption(registeredUser.country);
+        await registrationPage.registrationCity.fill(registeredUser.city);
+        await registrationPage.registrationState.fill(registeredUser.state);
+        await registrationPage.registrationAddress.fill(registeredUser.address);
+        await registrationPage.registrationZipCode.fill(registeredUser.zipCode);
+        await registrationPage.registrationPhoneNumber.fill(registeredUser.phoneNumber);
         await registrationPage.registrationCreateAccountButton.click();
         await expect(page).toHaveURL('/account_created');
-
-        await registrationPage.registrationContinue.click();
-        await registrationPage.registrationDeleteAccount.click();
-        await expect(page).toHaveURL('/delete_account');
-        await expect(registrationPage.registrationDeletionConfirmation).toBeVisible();
     })
+
     test('register user with existing email', async ({ registrationPage, randomUser }) => {
         await registrationPage.goto('/signup');
         await registrationPage.registrationSignupEmail.fill(existingUser.email)

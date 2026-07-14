@@ -1,4 +1,4 @@
-import { test as base } from '@playwright/test';
+import { test as base, expect } from '@playwright/test';
 import { LoginPage } from '../pages/login.page';
 import { ProductsPage } from '../pages/products.page';
 import { BaseUser } from '../utils/test-users';
@@ -13,6 +13,13 @@ type Pages = {
 };
 
 export const test = base.extend<Pages>({
+    page: async ({ page }, use) => {
+        await page.route('**/*doubleclick.net**', route => route.abort());
+        await page.route('**/*googlesyndication.com**', route => route.abort());
+        await page.route('**/*adtrafficquality.google**', route => route.abort());
+        await page.route('**/*admaster.cc**', route => route.abort());
+        await use(page);
+    },
     loginPage: async ({ page }, use) => {
         await use(new LoginPage(page));
     },
@@ -25,9 +32,15 @@ export const test = base.extend<Pages>({
     randomUser: async ({ }, use) => {
         await use(new BaseUser());
     },
-    registeredUser: async ({ page, randomUser }, use) => {
+    registeredUser: async ({ page, randomUser, registrationPage }, use) => {
         //fill in registration 
         await page.goto("/login")
+        await use(randomUser);
+
+        //teardown
+        await page.goto('/');
+        await registrationPage.registrationDeleteAccount.click()
+        await expect(page).toHaveURL('/delete_account')
     }
 });
 
