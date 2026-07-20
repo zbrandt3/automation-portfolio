@@ -3,17 +3,42 @@ import { BasePage } from "./base.page";
 
 export class ProductsPage extends BasePage {
 
-    readonly searchBar: Locator;
-    readonly submitSearch;
+    readonly productsSearchBar: Locator;
+    readonly productsSubmitSearch: Locator;
+    readonly productsNavButton: Locator;
+    readonly productItemList: Locator;
+    readonly productViewItem: Locator;
+    readonly productItemPageName: Locator;
+    readonly productItemPageCategory: Locator;
+    readonly productItemPagePrice: Locator;
+    readonly productItemPageAvailability: Locator;
+    readonly productItemPageCondition: Locator;
+    readonly productItemPageBrand: Locator;
 
-    constructor(page: Page) {
+    readonly productId: number;
+
+    constructor(page: Page, productId = 1) {
         super(page);
-        this.searchBar = page.locator('#search_product');
-        this.submitSearch = page.locator('#submit_search');
+        //allow for searching of specific products, default to first item
+        this.productId = productId;
+
+        this.productsSearchBar = page.locator('#search_product');
+        this.productsSubmitSearch = page.locator('#submit_search');
+        this.productsNavButton = page.locator('li a[href="/products"]');
+        this.productItemList = page.locator('.features_items');
+        this.productViewItem = page.locator(`a[href="/product_details/${productId}"]`)
+        this.productItemPageName = page.locator('.product-information h2')
+        this.productItemPageCategory = page.locator('.product-information').getByText('Category:');
+        this.productItemPagePrice = page.locator('.product-information span').getByText('Rs.');
+        this.productItemPageAvailability = page.locator('.product-information').getByText('Availability:');
+        this.productItemPageCondition = page.locator('.product-information').getByText('Condition:');
+        this.productItemPageBrand = page.locator('.product-information').getByText('Brand:');
+
+
     }
 
     async searchProduct(product: string) {
-        await this.searchBar.fill(product);
-        await this.submitSearch.click()
+        await this.productsSearchBar.fill(product);
+        await this.productsSubmitSearch.click()
     }
 }
