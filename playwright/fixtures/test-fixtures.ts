@@ -3,7 +3,8 @@ import { LoginPage } from '../pages/login.page';
 import { ProductsPage } from '../pages/products.page';
 import { BaseUser } from '../utils/test-users';
 import { RegistrationPage } from '../pages/registration.page';
-import { HomePage } from '../pages/home.page';
+import { ContactUsPage } from '../pages/contactUs.page';
+import { TestCasesPage } from '../pages/testCases.page';
 
 type Pages = {
     loginPage: LoginPage;
@@ -11,7 +12,8 @@ type Pages = {
     registrationPage: RegistrationPage;
     randomUser: BaseUser;
     registeredUser: BaseUser;
-    homePage: HomePage;
+    contactUsPage: ContactUsPage;
+    testCasesPage: TestCasesPage;
 };
 
 export const test = base.extend<Pages>({
@@ -31,8 +33,11 @@ export const test = base.extend<Pages>({
     registrationPage: async ({ page }, use) => {
         await use(new RegistrationPage(page));
     },
-    homePage: async ({ page }, use) => {
-        await use(new HomePage(page));
+    contactUsPage: async ({ page }, use) => {
+        await use(new ContactUsPage(page));
+    },
+    testCasesPage: async ({ page }, use) => {
+        await use(new TestCasesPage(page));
     },
     randomUser: async ({ }, use) => {
         await use(new BaseUser());

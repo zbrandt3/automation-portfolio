@@ -1,7 +1,7 @@
 import { BasePage } from "./base.page";
 import { Locator, Page } from "@playwright/test";
 
-export class HomePage extends BasePage {
+export class ContactUsPage extends BasePage {
     readonly contactUsButton: Locator;
     readonly getInTouchText: Locator;
     readonly contactUsName: Locator;
