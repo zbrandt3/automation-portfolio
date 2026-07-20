@@ -2,7 +2,8 @@ import { test, expect } from "../fixtures/test-fixtures";
 import { ProductsPage } from "../pages/products.page";
 
 //specific item number search
-let productId = 4;
+const productId = 4;
+const searchText = 'blue';
 
 test.describe('Check products page', async () => {
     test('View first product', async ({ productsPage, page }) => {
@@ -35,5 +36,23 @@ test.describe('Check products page', async () => {
         await expect(nProductPage.productItemPagePrice).toBeVisible();
         await expect(nProductPage.productItemPageCondition).toBeVisible();
         await expect(nProductPage.productItemPageBrand).toBeVisible();
+    })
+    test('Search product', async ({ productsPage, page }) => {
+        await productsPage.goto('/');
+        await productsPage.productsNavButton.click();
+        await expect(page).toHaveURL('/products');
+        await productsPage.productsSearchBar.fill(productsPage.searchProductText);
+        await productsPage.productsSubmitSearch.click();
+        await expect(productsPage.productSearchedProducts).toBeVisible();
+    })
+    test('Search specific product', async ({ page }) => {
+        const specificSearch = new ProductsPage(page, productId, searchText)
+        await specificSearch.goto('/');
+        await specificSearch.productsNavButton.click();
+        await expect(page).toHaveURL('/products');
+        await specificSearch.productsSearchBar.fill(specificSearch.searchProductText);
+        await specificSearch.productsSubmitSearch.click();
+        await expect(specificSearch.productSearchedProducts).toBeVisible();
+        await expect(specificSearch.productItemList).toContainText(searchText, { ignoreCase: true });
     })
 })

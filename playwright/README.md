@@ -209,7 +209,7 @@ Based on the 26 official test cases at `/test_cases`:
 | TC3 | Login with incorrect credentials | ✅ |
 | TC4 | Logout User | ✅ |
 | TC5 | Register with existing email | ✅ |
-| TC6 | Contact Us Form |  ✅ | - Note: Website issues cause test to be flaky
+| TC6 | Contact Us Form | ☑️ | - Flaky. See notes. 
 | TC7 | Verify Test Cases page | ✅ |
 | TC8 | View All Products + product detail | ✅ |
 | TC9 | Search Product | 🚧 In Progress |
