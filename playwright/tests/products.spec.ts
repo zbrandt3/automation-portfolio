@@ -6,9 +6,9 @@ const productId = 4;
 const searchText = 'blue';
 
 test.describe('Check products page', async () => {
-    test('View first product', async ({ productsPage, page }) => {
+    test('View first product', async ({ productsPage, page, homePage }) => {
         await productsPage.goto('/');
-        await productsPage.productsNavButton.click();
+        await homePage.productsPageNavButton.click();
         await expect(page).toHaveURL('/products');
         await expect(productsPage.productItemList).toBeVisible();
         await productsPage.productViewItem.click();
@@ -21,10 +21,10 @@ test.describe('Check products page', async () => {
         await expect(productsPage.productItemPageCondition).toBeVisible();
         await expect(productsPage.productItemPageBrand).toBeVisible();
     })
-    test('View n product', async ({ page }) => {
+    test('View n product', async ({ page, homePage }) => {
         const nProductPage = new ProductsPage(page, productId);
         await nProductPage.goto('/');
-        await nProductPage.productsNavButton.click();
+        await homePage.productsPageNavButton.click();
         await expect(page).toHaveURL('/products');
         await expect(nProductPage.productItemList).toBeVisible();
         await nProductPage.productViewItem.click();
@@ -37,21 +37,19 @@ test.describe('Check products page', async () => {
         await expect(nProductPage.productItemPageCondition).toBeVisible();
         await expect(nProductPage.productItemPageBrand).toBeVisible();
     })
-    test('Search product', async ({ productsPage, page }) => {
+    test('Search product', async ({ productsPage, page, homePage }) => {
         await productsPage.goto('/');
-        await productsPage.productsNavButton.click();
+        await homePage.productsPageNavButton.click();
         await expect(page).toHaveURL('/products');
-        await productsPage.productsSearchBar.fill(productsPage.searchProductText);
-        await productsPage.productsSubmitSearch.click();
+        await productsPage.searchProduct(searchText);
         await expect(productsPage.productSearchedProducts).toBeVisible();
     })
-    test('Search specific product', async ({ page }) => {
+    test('Search specific product', async ({ page, homePage }) => {
         const specificSearch = new ProductsPage(page, productId, searchText)
         await specificSearch.goto('/');
-        await specificSearch.productsNavButton.click();
+        await homePage.productsPageNavButton.click();
         await expect(page).toHaveURL('/products');
-        await specificSearch.productsSearchBar.fill(specificSearch.searchProductText);
-        await specificSearch.productsSubmitSearch.click();
+        await specificSearch.searchProduct(searchText);
         await expect(specificSearch.productSearchedProducts).toBeVisible();
         await expect(specificSearch.productItemList).toContainText(searchText, { ignoreCase: true });
     })

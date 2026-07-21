@@ -2,12 +2,12 @@ import { test, expect } from "../fixtures/test-fixtures";
 import { existingUser1 as existingUser } from "../utils/test-users";
 
 test.describe("Registering new user", () => {
-    test('Register minimum user', async ({ page, registrationPage, registeredUser }) => {
+    test('Register minimum user', async ({ page, registrationPage, registeredUser, loginPage }) => {
         //signup page to registration page
         await registrationPage.goto('/signup');
-        await registrationPage.registrationSignupEmail.fill(registeredUser.email);
-        await registrationPage.registrationSignupName.fill(registeredUser.name);
-        await registrationPage.registrationSignUpButton.click();
+        await loginPage.registrationSignupEmail.fill(registeredUser.email);
+        await loginPage.registrationSignupName.fill(registeredUser.name);
+        await loginPage.registrationSignUpButton.click();
 
         //registration page
         await registrationPage.registrationPassword.fill(registeredUser.password);
@@ -24,12 +24,12 @@ test.describe("Registering new user", () => {
         await expect(page).toHaveURL('/account_created');
     })
 
-    test('register user with existing email', async ({ registrationPage, randomUser }) => {
+    test('register user with existing email', async ({ registrationPage, randomUser, loginPage }) => {
         await registrationPage.goto('/signup');
-        await registrationPage.registrationSignupEmail.fill(existingUser.email)
-        await registrationPage.registrationSignupName.fill(randomUser.name)
-        await registrationPage.registrationSignUpButton.click();
-        await expect(registrationPage.registrationEmailError).toBeVisible();
-        await expect(registrationPage.registrationEmailError).toHaveCSS('color', 'rgb(255, 0, 0)');
+        await loginPage.registrationSignupEmail.fill(existingUser.email)
+        await loginPage.registrationSignupName.fill(randomUser.name)
+        await loginPage.registrationSignUpButton.click();
+        await expect(loginPage.registrationEmailError).toBeVisible();
+        await expect(loginPage.registrationEmailError).toHaveCSS('color', 'rgb(255, 0, 0)');
     })
 });

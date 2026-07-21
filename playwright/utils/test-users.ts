@@ -50,5 +50,5 @@ export class BaseUser {
 export const existingUser1 = {
     email: "zaneqa@gmail.com",
     password: "QATest1!",
-    name: "zaneqa",
+    name: "zane",
 }

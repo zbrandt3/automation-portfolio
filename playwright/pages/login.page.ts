@@ -1,6 +1,6 @@
 import { Page, Locator } from "@playwright/test";
 import { BasePage } from "./base.page";
-import { BaseUser } from "../utils/test-users";
+import { HomePage } from "./home.page";
 
 export class LoginPage extends BasePage {
     readonly loginEmail: Locator;
@@ -8,11 +8,13 @@ export class LoginPage extends BasePage {
     readonly loginButton: Locator;
     readonly url: string;
     readonly loginError: Locator;
+    readonly registrationSignupName: Locator;
+    readonly registrationSignupEmail: Locator;
+    readonly registrationSignUpButton: Locator;
+    readonly registrationEmailError: Locator;
+    readonly registrationContinue: Locator;
 
     //appears on successful login, not on page itself. Used for validating login
-    readonly displayName: Locator;
-    readonly logoutButton: Locator;
-    readonly logo: Locator;
 
     constructor(page: Page) {
         super(page);
@@ -22,9 +24,12 @@ export class LoginPage extends BasePage {
         this.url = "/login";
         this.loginError = page.getByText('Your email or password is incorrect!');
 
-        this.displayName = page.locator('b');
-        this.logoutButton = page.locator('a[href="/logout"]');
-        this.logo = page.locator('.logo');
+        this.registrationSignupName = page.locator('[data-qa="signup-name"]');
+        this.registrationSignupEmail = page.locator('[data-qa="signup-email"]');
+        this.registrationSignUpButton = page.locator('[data-qa="signup-button"]');
+        this.registrationEmailError = page.getByText('Email Address already exist!');
+        this.registrationContinue = page.locator('[data-qa="continue-button"]');
+
     }
 
     async login(email: string, password: string) {
@@ -34,9 +39,5 @@ export class LoginPage extends BasePage {
         await this.loginButton.click();
     }
 
-    async logout(email: string, password: string) {
-        await this.login(email, password);
-        await this.logoutButton.click();
-    }
 }
 

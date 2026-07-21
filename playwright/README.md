@@ -212,11 +212,11 @@ Based on the 26 official test cases at `/test_cases`:
 | TC6 | Contact Us Form | ☑️ | - Flaky. See notes. 
 | TC7 | Verify Test Cases page | ✅ |
 | TC8 | View All Products + product detail | ✅ |
-| TC9 | Search Product | 🚧 In Progress |
-| TC10 | Subscription on home page | — |
-| TC11 | Subscription on Cart page | — |
-| TC12 | Add Products to Cart | — |
-| TC13 | Verify Product quantity in Cart | — |
+| TC9 | Search Product | ✅ | 
+| TC10 | Subscription on home page | 🚧 In Progress |
+| TC11 | Subscription on Cart page | 🚧 In Progress |
+| TC12 | Add Products to Cart | 🚧 In Progress |
+| TC13 | Verify Product quantity in Cart | 🚧 In Progress |
 | TC14 | Place Order: Register while Checkout | — |
 | TC15 | Place Order: Register before Checkout | — |
 | TC16 | Place Order: Login before Checkout | — |

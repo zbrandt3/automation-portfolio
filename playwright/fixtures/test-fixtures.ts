@@ -5,6 +5,7 @@ import { BaseUser } from '../utils/test-users';
 import { RegistrationPage } from '../pages/registration.page';
 import { ContactUsPage } from '../pages/contactUs.page';
 import { TestCasesPage } from '../pages/testCases.page';
+import { HomePage } from '../pages/home.page';
 
 type Pages = {
     loginPage: LoginPage;
@@ -14,6 +15,7 @@ type Pages = {
     registeredUser: BaseUser;
     contactUsPage: ContactUsPage;
     testCasesPage: TestCasesPage;
+    homePage: HomePage;
 };
 
 export const test = base.extend<Pages>({
@@ -39,17 +41,20 @@ export const test = base.extend<Pages>({
     testCasesPage: async ({ page }, use) => {
         await use(new TestCasesPage(page));
     },
+    homePage: async ({ page }, use) => {
+        await use(new HomePage(page));
+    },
     randomUser: async ({ }, use) => {
         await use(new BaseUser());
     },
-    registeredUser: async ({ page, randomUser, registrationPage }, use) => {
+    registeredUser: async ({ page, randomUser, homePage }, use) => {
         //fill in registration 
         await page.goto("/login")
         await use(randomUser);
 
         //teardown
         await page.goto('/');
-        await registrationPage.registrationDeleteAccount.click()
+        await homePage.deleteAccountButton.click()
         await expect(page).toHaveURL('/delete_account')
     }
 });

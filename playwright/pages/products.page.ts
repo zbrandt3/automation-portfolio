@@ -5,9 +5,9 @@ export class ProductsPage extends BasePage {
 
     readonly productsSearchBar: Locator;
     readonly productsSubmitSearch: Locator;
-    readonly productsNavButton: Locator;
     readonly productItemList: Locator;
     readonly productViewItem: Locator;
+
     readonly productItemPageName: Locator;
     readonly productItemPageCategory: Locator;
     readonly productItemPagePrice: Locator;
@@ -27,9 +27,9 @@ export class ProductsPage extends BasePage {
 
         this.productsSearchBar = page.locator('#search_product');
         this.productsSubmitSearch = page.locator('#submit_search');
-        this.productsNavButton = page.locator('li a[href="/products"]');
         this.productItemList = page.locator('.features_items');
         this.productViewItem = page.locator(`a[href="/product_details/${productId}"]`)
+
         this.productItemPageName = page.locator('.product-information h2')
         this.productItemPageCategory = page.locator('.product-information').getByText('Category:');
         this.productItemPagePrice = page.locator('.product-information span').getByText('Rs.');

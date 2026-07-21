@@ -2,9 +2,9 @@ import { test, expect } from "../fixtures/test-fixtures";
 import { existingUser1 as existingUser } from "../utils/test-users";
 
 test.describe('Validating login', () => {
-    test('home page visibility ', async ({ loginPage }) => {
+    test('home page visibility ', async ({ loginPage, homePage }) => {
         await loginPage.goto('/');
-        await expect(loginPage.logo).toBeVisible();
+        await expect(homePage.logo).toBeVisible();
     })
     test('invalid login', async ({ loginPage, randomUser }) => {
         await loginPage.goto(loginPage.url);
@@ -13,12 +13,13 @@ test.describe('Validating login', () => {
         await expect(loginPage.loginError).toBeVisible();
         await expect(loginPage.loginError).toHaveCSS('color', 'rgb(255, 0, 0)');
     })
-    test('valid login', async ({ loginPage }) => {
+    test('valid login', async ({ loginPage, homePage }) => {
         await loginPage.login(existingUser.email, existingUser.password);
-        await expect(loginPage.displayName).toHaveText(existingUser.name);
+        await expect(homePage.displayName).toHaveText(existingUser.name);
     })
-    test('logout', async ({ loginPage, page }) => {
-        await loginPage.logout(existingUser.email, existingUser.password);
+    test('logout', async ({ loginPage, page, homePage }) => {
+        await loginPage.login(existingUser.email, existingUser.password);
+        await homePage.logoutButton.click();
         await expect(page).toHaveURL("/login");
     })
 

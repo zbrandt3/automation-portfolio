@@ -2,7 +2,6 @@ import { BasePage } from "./base.page";
 import { Locator, Page } from "@playwright/test";
 
 export class ContactUsPage extends BasePage {
-    readonly contactUsButton: Locator;
     readonly getInTouchText: Locator;
     readonly contactUsName: Locator;
     readonly contactUsEmail: Locator;
@@ -14,7 +13,6 @@ export class ContactUsPage extends BasePage {
 
     constructor(page: Page) {
         super(page);
-        this.contactUsButton = page.locator('a[href="/contact_us"]')
         this.getInTouchText = page.getByText('Get In Touch');
         this.contactUsName = page.locator('[data-qa="name"]');
         this.contactUsEmail = page.locator('[data-qa="email"]');
