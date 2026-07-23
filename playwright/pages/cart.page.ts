@@ -10,8 +10,8 @@ export class CartPage extends BasePage {
     constructor(page: Page) {
         super(page);
         this.cartSubscriptionHeader = page.getByRole('heading', { name: 'Subscription' });
-        this.cartSubscriptionForm = page.locator('#susbscribe');
-        this.cartSubscriptionSubmitButton = page.locator('subscribe');
+        this.cartSubscriptionForm = page.locator('#susbscribe_email');
+        this.cartSubscriptionSubmitButton = page.locator('#subscribe');
         this.cartSubscriptionSuccessMessage = page.locator('#success-subscribe');
     }
 }
