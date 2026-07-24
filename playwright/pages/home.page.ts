@@ -12,6 +12,7 @@ export class HomePage extends BasePage {
     readonly subscriptionForm: Locator;
     readonly subscriptionSubmitButton: Locator;
     readonly subscriptionSuccessMessage: Locator;
+    readonly cartPageNavButton: Locator;
 
     readonly logoutButton: Locator;
     readonly displayName: Locator;
@@ -27,10 +28,11 @@ export class HomePage extends BasePage {
         this.logoutButton = page.locator('a[href="/logout"]');
         this.logo = page.locator('.logo');
         this.deletionConfirmation = page.locator('[data-qa="account-deleted"]');
-        this.subscriptionHeader  = page.getByRole('heading', {name: 'Subscription'});
+        this.subscriptionHeader = page.getByRole('heading', { name: 'Subscription' });
         this.subscriptionForm = page.locator('#susbscribe_email');
         this.subscriptionSubmitButton = page.locator('#subscribe');
         this.subscriptionSuccessMessage = page.locator('#success-subscribe');
+        this.cartPageNavButton = page.locator('header a[href="/view_cart"]')
     }
 
 }

@@ -6,6 +6,11 @@ export class CartPage extends BasePage {
     readonly cartSubscriptionForm: Locator;
     readonly cartSubscriptionSubmitButton: Locator;
     readonly cartSubscriptionSuccessMessage: Locator;
+    readonly cartProductTableRows: Locator;
+    readonly cartProduct: Locator;
+    /*readonly cartProductPrice: Locator;
+    readonly cartProductQuanity: Locator;
+    readonly cartTotalPrice: Locator;*/
 
     constructor(page: Page) {
         super(page);
@@ -13,5 +18,10 @@ export class CartPage extends BasePage {
         this.cartSubscriptionForm = page.locator('#susbscribe_email');
         this.cartSubscriptionSubmitButton = page.locator('#subscribe');
         this.cartSubscriptionSuccessMessage = page.locator('#success-subscribe');
+        this.cartProductTableRows = page.locator('#cart_info_table tbody trow');
+        this.cartProduct = page.locator('');
+        /*this.cartProductPrice =
+            this.cartProductQuanity =
+            this.cartTotalPrice =*/
     }
 }
