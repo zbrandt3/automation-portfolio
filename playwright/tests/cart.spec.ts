@@ -14,6 +14,6 @@ test.describe('Check cart page', () => {
         await productsPage.addProductToCart(1);
         await productsPage.addProductToCart(2);
         await homePage.cartPageNavButton.click();
-        expect(cartPage.cartProductTableRows).toHaveCount(2);
+        await expect(cartPage.cartProductTableRows).toHaveCount(2);
     })
 })

@@ -18,7 +18,7 @@ export class CartPage extends BasePage {
         this.cartSubscriptionForm = page.locator('#susbscribe_email');
         this.cartSubscriptionSubmitButton = page.locator('#subscribe');
         this.cartSubscriptionSuccessMessage = page.locator('#success-subscribe');
-        this.cartProductTableRows = page.locator('#cart_info_table tbody trow');
+        this.cartProductTableRows = page.locator('#cart_info_table tbody tr');
         this.cartProduct = page.locator('');
         /*this.cartProductPrice =
             this.cartProductQuanity =

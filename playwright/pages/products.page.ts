@@ -57,7 +57,7 @@ export class ProductsPage extends BasePage {
 
         //set item locators when id is set
         const item = this.page.locator('.single-products').nth(id - 1);
-        const addItem = this.page.getByText('Add to cart').first();
+        const addItem = this.page.locator(`.product-overlay [data-product-id="${id}"]`)
 
         await item.hover();
         await addItem.click();
