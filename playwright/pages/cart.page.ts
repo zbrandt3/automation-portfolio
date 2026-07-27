@@ -3,7 +3,8 @@ import { BasePage } from './base.page';
 import { ProductsPage } from './products.page';
 
 export class CartPage extends BasePage {
-    public cartProductTotalPrice: Promise<number>;
+    //TODO: change to Promise<number> when getProductTotalPrice() is finished
+    public cartProductTotalPrice: number;
     protected cartId = 1;
 
     readonly cartSubscriptionHeader: Locator;
@@ -27,13 +28,14 @@ export class CartPage extends BasePage {
         this.cartProductQuanity = page.locator('.cart_quantity').nth(this.cartId - 1);
         this.cartProductPrice = page.locator('.cart_price').nth(this.cartId - 1);
         this.cartProductTotalPriceText = page.locator('.cart_total_price').nth(this.cartId - 1);
-        this.cartProductTotalPrice = this.getProductTotalPrice();
+        this.cartProductTotalPrice = 0;
     }
 
     async setCartID(id: number) {
         this.cartId = id;
     }
 
+    //placeholder code to get full price of multiple of an item on cart
     async getProductTotalPrice(): Promise<number> {
         const priceText = this.cartProductPrice.innerText();
         return parseFloat((await priceText).replace('Rs. ', ''));
