@@ -1,16 +1,20 @@
 import { Page, Locator } from '@playwright/test'
 import { BasePage } from './base.page';
+import { ProductsPage } from './products.page';
 
 export class CartPage extends BasePage {
+    public cartProductTotalPrice: Promise<number>;
+    protected cartId = 1;
+
     readonly cartSubscriptionHeader: Locator;
     readonly cartSubscriptionForm: Locator;
     readonly cartSubscriptionSubmitButton: Locator;
     readonly cartSubscriptionSuccessMessage: Locator;
     readonly cartProductTableRows: Locator;
     readonly cartProduct: Locator;
-    /*readonly cartProductPrice: Locator;
+    readonly cartProductPrice: Locator;
     readonly cartProductQuanity: Locator;
-    readonly cartTotalPrice: Locator;*/
+    readonly cartProductTotalPriceText: Locator;
 
     constructor(page: Page) {
         super(page);
@@ -19,9 +23,19 @@ export class CartPage extends BasePage {
         this.cartSubscriptionSubmitButton = page.locator('#subscribe');
         this.cartSubscriptionSuccessMessage = page.locator('#success-subscribe');
         this.cartProductTableRows = page.locator('#cart_info_table tbody tr');
-        this.cartProduct = page.locator('');
-        /*this.cartProductPrice =
-            this.cartProductQuanity =
-            this.cartTotalPrice =*/
+        this.cartProduct = page.locator('.class_product').nth(this.cartId - 1);
+        this.cartProductQuanity = page.locator('.cart_quantity').nth(this.cartId - 1);
+        this.cartProductPrice = page.locator('.cart_price').nth(this.cartId - 1);
+        this.cartProductTotalPriceText = page.locator('.cart_total_price').nth(this.cartId - 1);
+        this.cartProductTotalPrice = this.getProductTotalPrice();
+    }
+
+    async setCartID(id: number) {
+        this.cartId = id;
+    }
+
+    async getProductTotalPrice(): Promise<number> {
+        const priceText = this.cartProductPrice.innerText();
+        return parseFloat((await priceText).replace('Rs. ', ''));
     }
 }

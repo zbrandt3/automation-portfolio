@@ -15,5 +15,16 @@ test.describe('Check cart page', () => {
         await productsPage.addProductToCart(2);
         await homePage.cartPageNavButton.click();
         await expect(cartPage.cartProductTableRows).toHaveCount(2);
+
+        //magic numbers for now while more elegant solution is explored. same with hard coded loop
+        await expect(cartPage.cartProductPrice).toBeVisible();
+        await expect(cartPage.cartProductQuanity).toBeVisible();
+        await expect(cartPage.cartProductTotalPriceText).toBeVisible();
+
+        await cartPage.setCartID(2);
+        await expect(cartPage.cartProductPrice).toBeVisible();
+        await expect(cartPage.cartProductQuanity).toBeVisible();
+        await expect(cartPage.cartProductTotalPriceText).toBeVisible();
+
     })
 })
