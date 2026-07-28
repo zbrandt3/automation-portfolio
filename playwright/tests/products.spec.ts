@@ -1,4 +1,5 @@
 import { test, expect } from "../fixtures/test-fixtures";
+import { ProductDetailsPage } from "../pages/productDetails.page";
 import { ProductsPage } from "../pages/products.page";
 
 //specific item number search
@@ -6,7 +7,7 @@ const productId = 4;
 const searchText = 'blue';
 
 test.describe('Check products page', async () => {
-    test('View first product', async ({ productsPage, page, homePage }) => {
+    test('View first product', async ({ page, productsPage, productDetailsPage, homePage }) => {
         await productsPage.goto('/');
         await homePage.productsPageNavButton.click();
         await expect(page).toHaveURL('/products');
@@ -14,15 +15,16 @@ test.describe('Check products page', async () => {
         await productsPage.productViewItem.click();
 
         await expect(page).toHaveURL(`/product_details/${productsPage.productId}`);
-        await expect(productsPage.productItemPageAvailability).toBeVisible();
-        await expect(productsPage.productItemPageName).toBeVisible();
-        await expect(productsPage.productItemPageCategory).toBeVisible();
-        await expect(productsPage.productItemPagePrice).toBeVisible();
-        await expect(productsPage.productItemPageCondition).toBeVisible();
-        await expect(productsPage.productItemPageBrand).toBeVisible();
+        await expect(productDetailsPage.productDetailsPageAvailability).toBeVisible();
+        await expect(productDetailsPage.productDetailsPageName).toBeVisible();
+        await expect(productDetailsPage.productDetailsPageCategory).toBeVisible();
+        await expect(productDetailsPage.productDetailsPagePrice).toBeVisible();
+        await expect(productDetailsPage.productDetailsPageCondition).toBeVisible();
+        await expect(productDetailsPage.productDetailsPageBrand).toBeVisible();
     })
     test('View n product', async ({ page, homePage }) => {
         const nProductPage = new ProductsPage(page, productId);
+        const nProductDetailsPage = new ProductDetailsPage(page);
         await nProductPage.goto('/');
         await homePage.productsPageNavButton.click();
         await expect(page).toHaveURL('/products');
@@ -30,12 +32,12 @@ test.describe('Check products page', async () => {
         await nProductPage.productViewItem.click();
 
         await expect(page).toHaveURL(`/product_details/${nProductPage.productId}`);
-        await expect(nProductPage.productItemPageAvailability).toBeVisible();
-        await expect(nProductPage.productItemPageName).toBeVisible();
-        await expect(nProductPage.productItemPageCategory).toBeVisible();
-        await expect(nProductPage.productItemPagePrice).toBeVisible();
-        await expect(nProductPage.productItemPageCondition).toBeVisible();
-        await expect(nProductPage.productItemPageBrand).toBeVisible();
+        await expect(nProductDetailsPage.productDetailsPageAvailability).toBeVisible();
+        await expect(nProductDetailsPage.productDetailsPageName).toBeVisible();
+        await expect(nProductDetailsPage.productDetailsPageCategory).toBeVisible();
+        await expect(nProductDetailsPage.productDetailsPagePrice).toBeVisible();
+        await expect(nProductDetailsPage.productDetailsPageCondition).toBeVisible();
+        await expect(nProductDetailsPage.productDetailsPageBrand).toBeVisible();
     })
     test('Search product', async ({ productsPage, page, homePage }) => {
         await productsPage.goto('/');

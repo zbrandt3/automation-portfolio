@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/test-fixtures'
+import { CartPage } from '../pages/cart.page';
 
 test.describe('Check cart page', () => {
     test('subscribe with email on cart page', async ({ cartPage, homePage }) => {
@@ -25,6 +26,9 @@ test.describe('Check cart page', () => {
         await expect(cartPage.cartProductPrice).toBeVisible();
         await expect(cartPage.cartProductQuanity).toBeVisible();
         await expect(cartPage.cartProductTotalPriceText).toBeVisible();
-
+    })
+    test('verify product quantity in cart', async ({ cartPage, homePage }) => {
+        await cartPage.goto('/');
+        await homePage.homeViewProduct.click();
     })
 })
