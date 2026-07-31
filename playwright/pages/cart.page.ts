@@ -14,7 +14,8 @@ export class CartPage extends BasePage {
     readonly cartProductTableRows: Locator;
     readonly cartProduct: Locator;
     readonly cartProductPrice: Locator;
-    readonly cartProductQuanity: Locator;
+    readonly cartProductQuantity: Locator;
+    readonly cartProductQuantityButton: Locator;
     readonly cartProductTotalPriceText: Locator;
 
     constructor(page: Page) {
@@ -25,7 +26,8 @@ export class CartPage extends BasePage {
         this.cartSubscriptionSuccessMessage = page.locator('#success-subscribe');
         this.cartProductTableRows = page.locator('#cart_info_table tbody tr');
         this.cartProduct = page.locator('.class_product').nth(this.cartId - 1);
-        this.cartProductQuanity = page.locator('.cart_quantity').nth(this.cartId - 1);
+        this.cartProductQuantity = page.locator('.cart_quantity').nth(this.cartId - 1);
+        this.cartProductQuantityButton = page.locator('.cart_quantity button');
         this.cartProductPrice = page.locator('.cart_price').nth(this.cartId - 1);
         this.cartProductTotalPriceText = page.locator('.cart_total_price').nth(this.cartId - 1);
         this.cartProductTotalPrice = 0;

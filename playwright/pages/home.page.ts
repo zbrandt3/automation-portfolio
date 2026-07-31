@@ -36,7 +36,7 @@ export class HomePage extends BasePage {
         this.subscriptionSubmitButton = page.locator('#subscribe');
         this.subscriptionSuccessMessage = page.locator('#success-subscribe');
         this.cartPageNavButton = page.locator('header a[href="/view_cart"]')
-        this.homeViewProduct = page.locator('.single-products .choose').nth(this.homeId - 1);
+        this.homeViewProduct = page.locator(`a[href="/product_details/${this.homeId}"]`);
     }
 
     async setHomeID(id: number) {

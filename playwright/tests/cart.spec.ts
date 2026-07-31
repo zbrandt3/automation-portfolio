@@ -19,16 +19,21 @@ test.describe('Check cart page', () => {
 
         //magic numbers for now while more elegant solution is explored. same with hard coded loop
         await expect(cartPage.cartProductPrice).toBeVisible();
-        await expect(cartPage.cartProductQuanity).toBeVisible();
+        await expect(cartPage.cartProductQuantity).toBeVisible();
         await expect(cartPage.cartProductTotalPriceText).toBeVisible();
 
         await cartPage.setCartID(2);
         await expect(cartPage.cartProductPrice).toBeVisible();
-        await expect(cartPage.cartProductQuanity).toBeVisible();
+        await expect(cartPage.cartProductQuantity).toBeVisible();
         await expect(cartPage.cartProductTotalPriceText).toBeVisible();
     })
-    test('verify product quantity in cart', async ({ cartPage, homePage }) => {
+    test('verify product quantity in cart', async ({ cartPage, homePage, productDetailsPage }) => {
         await cartPage.goto('/');
         await homePage.homeViewProduct.click();
+        await productDetailsPage.productDetailsQuantity.fill('3');
+        await productDetailsPage.productDetailsAddToCart.click();
+        await productDetailsPage.productDetailsConfirmItemAdded.click();
+        await homePage.cartPageNavButton.click();
+        await expect(cartPage.cartProductQuantityButton).toHaveText('3');
     })
 })
