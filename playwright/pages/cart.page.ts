@@ -34,7 +34,7 @@ export class CartPage extends BasePage {
         this.cartProductTotalPriceText = page.locator('.cart_total_price').nth(this.cartId - 1);
         this.cartProductTotalPrice = 0;
 
-        this.cartCheckoutButton = page.getByRole('link', { name: 'Proceed To Checkout' })
+        this.cartCheckoutButton = page.getByText('Proceed To Checkout');
         this.cartCheckoutRegistration = page.getByRole('link', { name: 'Register / Login' });
     }
 

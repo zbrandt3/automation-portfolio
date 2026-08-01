@@ -8,18 +8,22 @@ import { ContactUsPage } from '../pages/contactUs.page';
 import { TestCasesPage } from '../pages/testCases.page';
 import { HomePage } from '../pages/home.page';
 import { CartPage } from '../pages/cart.page';
+import { AccountCreatedPage } from '../pages/accountCreated.page';
+import { CheckoutPage } from '../pages/checkout.page';
 
 type Pages = {
     loginPage: LoginPage;
     productsPage: ProductsPage;
     productDetailsPage: ProductDetailsPage;
     registrationPage: RegistrationPage;
+    accountCreatedPage: AccountCreatedPage;
     randomUser: BaseUser;
     registeredUser: BaseUser;
     contactUsPage: ContactUsPage;
     testCasesPage: TestCasesPage;
     homePage: HomePage;
     cartPage: CartPage;
+    checkoutPage: CheckoutPage;
 };
 
 export const test = base.extend<Pages>({
@@ -42,6 +46,9 @@ export const test = base.extend<Pages>({
     registrationPage: async ({ page }, use) => {
         await use(new RegistrationPage(page));
     },
+    accountCreatedPage: async ({ page }, use) => {
+        await use(new AccountCreatedPage(page));
+    },
     contactUsPage: async ({ page }, use) => {
         await use(new ContactUsPage(page));
     },
@@ -53,6 +60,9 @@ export const test = base.extend<Pages>({
     },
     cartPage: async ({ page }, use) => {
         await use(new CartPage(page));
+    },
+    checkoutPage: async ({ page }, user) => {
+        await user(new CheckoutPage(page));
     },
     randomUser: async ({ page, homePage }, use) => {
         await use(new BaseUser());

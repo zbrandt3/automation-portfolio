@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/test-fixtures'
 import { CartPage } from '../pages/cart.page';
+import { CheckoutPage } from '../pages/checkout.page';
 
 test.describe('Check cart page', () => {
     test('subscribe with email on cart page', async ({ cartPage, homePage }) => {
@@ -38,14 +39,24 @@ test.describe('Check cart page', () => {
     })
 
     test.describe('checkout', async () => {
-        test('register and complete checkout', async ({ page, productsPage, homePage, cartPage }) => {
+        test('register and complete checkout', async ({ page, productsPage, homePage, cartPage, randomUser, registrationPage, loginPage, accountCreatedPage, checkoutPage }) => {
             await page.goto('/');
             await productsPage.addProductToCart(1);
             await homePage.cartPageNavButton.click();
             await expect(page).toHaveURL('/view_cart');
             await cartPage.cartCheckoutButton.click();
             await cartPage.cartCheckoutRegistration.click();
-
+            await randomUser.createNewUserByGoingToSignupPage(registrationPage, loginPage);
+            await accountCreatedPage.accountCreatedContinueButton.click();
+            await expect(homePage.displayName).toBeVisible();
+            await homePage.cartPageNavButton.click();
+            await cartPage.cartCheckoutButton.click();
+            await expect(checkoutPage.checkoutPageName).toHaveText(`. ${randomUser.firstName} ${randomUser.lastName}`);
+            await expect(checkoutPage.checkoutPageAddress).toHaveText(`${randomUser.address}`);
+            await expect(checkoutPage.checkoutPageCityStateZip).toHaveText(`${randomUser.city} ${randomUser.state} ${randomUser.zipCode}`);
+            //toHaveText() returning Promise { <pending> }, TODO verify country text
+            //await expect(checkoutPage.checkoutPageCountry).toHaveText('India');
+            await expect(checkoutPage.checkoutPagePhoneNumber).toHaveText(`${randomUser.phoneNumber}`);
         })
     })
 
