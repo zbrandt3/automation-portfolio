@@ -2,6 +2,8 @@ import { Page, Locator } from "@playwright/test";
 import { BasePage } from "./base.page";
 
 export class HomePage extends BasePage {
+    protected homeId: number = 1;
+
     readonly logo: Locator;
     readonly productsPageNavButton: Locator;
     readonly contactUsPageNavButton: Locator;
@@ -13,6 +15,7 @@ export class HomePage extends BasePage {
     readonly subscriptionSubmitButton: Locator;
     readonly subscriptionSuccessMessage: Locator;
     readonly cartPageNavButton: Locator;
+    readonly homeViewProduct: Locator;
 
     readonly logoutButton: Locator;
     readonly displayName: Locator;
@@ -33,6 +36,11 @@ export class HomePage extends BasePage {
         this.subscriptionSubmitButton = page.locator('#subscribe');
         this.subscriptionSuccessMessage = page.locator('#success-subscribe');
         this.cartPageNavButton = page.locator('header a[href="/view_cart"]')
+        this.homeViewProduct = page.locator(`a[href="/product_details/${this.homeId}"]`);
+    }
+
+    async setHomeID(id: number) {
+        this.homeId = id;
     }
 
 }

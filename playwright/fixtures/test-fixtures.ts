@@ -1,6 +1,7 @@
 import { test as base, expect } from '@playwright/test';
 import { LoginPage } from '../pages/login.page';
 import { ProductsPage } from '../pages/products.page';
+import { ProductDetailsPage } from '../pages/productDetails.page';
 import { BaseUser } from '../utils/test-users';
 import { RegistrationPage } from '../pages/registration.page';
 import { ContactUsPage } from '../pages/contactUs.page';
@@ -11,6 +12,7 @@ import { CartPage } from '../pages/cart.page';
 type Pages = {
     loginPage: LoginPage;
     productsPage: ProductsPage;
+    productDetailsPage: ProductDetailsPage;
     registrationPage: RegistrationPage;
     randomUser: BaseUser;
     registeredUser: BaseUser;
@@ -33,6 +35,9 @@ export const test = base.extend<Pages>({
     },
     productsPage: async ({ page }, use) => {
         await use(new ProductsPage(page));
+    },
+    productDetailsPage: async ({ page }, use) => {
+        await use(new ProductDetailsPage(page));
     },
     registrationPage: async ({ page }, use) => {
         await use(new RegistrationPage(page));
