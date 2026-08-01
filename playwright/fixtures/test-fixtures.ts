@@ -54,18 +54,19 @@ export const test = base.extend<Pages>({
     cartPage: async ({ page }, use) => {
         await use(new CartPage(page));
     },
-    randomUser: async ({ }, use) => {
+    randomUser: async ({ page, homePage }, use) => {
         await use(new BaseUser());
-    },
-    registeredUser: async ({ page, randomUser, homePage }, use) => {
-        //fill in registration 
-        await page.goto("/login")
-        await use(randomUser);
-
         //teardown
         await page.goto('/');
         await homePage.deleteAccountButton.click()
         await expect(page).toHaveURL('/delete_account')
+
+    },
+    registeredUser: async ({ page, randomUser }, use) => {
+        //fill in registration 
+        await page.goto("/login")
+        await use(randomUser);
+
     }
 });
 

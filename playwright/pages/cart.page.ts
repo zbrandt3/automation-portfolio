@@ -17,6 +17,8 @@ export class CartPage extends BasePage {
     readonly cartProductQuantity: Locator;
     readonly cartProductQuantityButton: Locator;
     readonly cartProductTotalPriceText: Locator;
+    readonly cartCheckoutButton: Locator;
+    readonly cartCheckoutRegistration: Locator;
 
     constructor(page: Page) {
         super(page);
@@ -31,6 +33,9 @@ export class CartPage extends BasePage {
         this.cartProductPrice = page.locator('.cart_price').nth(this.cartId - 1);
         this.cartProductTotalPriceText = page.locator('.cart_total_price').nth(this.cartId - 1);
         this.cartProductTotalPrice = 0;
+
+        this.cartCheckoutButton = page.getByRole('link', { name: 'Proceed To Checkout' })
+        this.cartCheckoutRegistration = page.getByRole('link', { name: 'Register / Login' });
     }
 
     async setCartID(id: number) {

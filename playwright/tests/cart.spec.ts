@@ -36,4 +36,17 @@ test.describe('Check cart page', () => {
         await homePage.cartPageNavButton.click();
         await expect(cartPage.cartProductQuantityButton).toHaveText('3');
     })
+
+    test.describe('checkout', async () => {
+        test('register and complete checkout', async ({ page, productsPage, homePage, cartPage }) => {
+            await page.goto('/');
+            await productsPage.addProductToCart(1);
+            await homePage.cartPageNavButton.click();
+            await expect(page).toHaveURL('/view_cart');
+            await cartPage.cartCheckoutButton.click();
+            await cartPage.cartCheckoutRegistration.click();
+
+        })
+    })
+
 })
