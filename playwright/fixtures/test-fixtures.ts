@@ -10,6 +10,7 @@ import { HomePage } from '../pages/home.page';
 import { CartPage } from '../pages/cart.page';
 import { AccountCreatedPage } from '../pages/accountCreated.page';
 import { CheckoutPage } from '../pages/checkout.page';
+import { PaymentDetailsPage } from '../pages/paymentDetails.page';
 
 type Pages = {
     loginPage: LoginPage;
@@ -24,6 +25,7 @@ type Pages = {
     homePage: HomePage;
     cartPage: CartPage;
     checkoutPage: CheckoutPage;
+    paymentDetailsPage: PaymentDetailsPage;
 };
 
 export const test = base.extend<Pages>({
@@ -61,8 +63,11 @@ export const test = base.extend<Pages>({
     cartPage: async ({ page }, use) => {
         await use(new CartPage(page));
     },
-    checkoutPage: async ({ page }, user) => {
-        await user(new CheckoutPage(page));
+    checkoutPage: async ({ page }, use) => {
+        await use(new CheckoutPage(page));
+    },
+    paymentDetailsPage: async ({ page }, use) => {
+        await use(new PaymentDetailsPage(page));
     },
     randomUser: async ({ page, homePage }, use) => {
         await use(new BaseUser());

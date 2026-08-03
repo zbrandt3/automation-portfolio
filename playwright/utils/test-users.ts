@@ -14,6 +14,10 @@ export class BaseUser {
     public city: string;
     public zipCode: string;
     public phoneNumber: string;
+    public cardNumber: string;
+    public cvc: string;
+    public cardExpirationMonth: string;
+    public cardExpirationYear: string;
 
     constructor() {
         this.email = this.createEmail();
@@ -28,6 +32,10 @@ export class BaseUser {
         this.zipCode = "123456";
         this.dateOfBirth = ['27', 'July', '1990'];
         this.phoneNumber = "1234567890";
+        this.cardNumber = "1234567890123456";
+        this.cvc = "123";
+        this.cardExpirationMonth = "12";
+        this.cardExpirationYear = "2069";
     }
 
 

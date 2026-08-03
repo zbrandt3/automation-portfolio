@@ -39,7 +39,7 @@ test.describe('Check cart page', () => {
     })
 
     test.describe('checkout', async () => {
-        test('register and complete checkout', async ({ page, productsPage, homePage, cartPage, randomUser, registrationPage, loginPage, accountCreatedPage, checkoutPage }) => {
+        test('register and complete checkout', async ({ page, productsPage, homePage, cartPage, randomUser, registrationPage, loginPage, accountCreatedPage, checkoutPage, paymentDetailsPage }) => {
             await page.goto('/');
             await productsPage.addProductToCart(1);
             await homePage.cartPageNavButton.click();
@@ -54,9 +54,17 @@ test.describe('Check cart page', () => {
             await expect(checkoutPage.checkoutPageName).toHaveText(`. ${randomUser.firstName} ${randomUser.lastName}`);
             await expect(checkoutPage.checkoutPageAddress).toHaveText(`${randomUser.address}`);
             await expect(checkoutPage.checkoutPageCityStateZip).toHaveText(`${randomUser.city} ${randomUser.state} ${randomUser.zipCode}`);
-            //toHaveText() returning Promise { <pending> }, TODO verify country text
-            //await expect(checkoutPage.checkoutPageCountry).toHaveText('India');
+            await expect(checkoutPage.checkoutPageCountry).toHaveText('United States');
             await expect(checkoutPage.checkoutPagePhoneNumber).toHaveText(`${randomUser.phoneNumber}`);
+            await checkoutPage.checkoutPageDescription.fill('x');
+            await checkoutPage.checkoutOutPagePlaceOrder.click();
+            await paymentDetailsPage.paymentDetailsPageCardName.fill(randomUser.name);
+            await paymentDetailsPage.paymentDetailsPageCardNumber.fill(randomUser.cardNumber);
+            await paymentDetailsPage.paymentDetailsPageCVC.fill(randomUser.cvc);
+            await paymentDetailsPage.paymentDetailsPageExpirationMonth.fill(randomUser.cardExpirationMonth);
+            await paymentDetailsPage.paymentDetailsPageExpirationYear.fill(randomUser.cardExpirationYear);
+            await paymentDetailsPage.paymentDetailsPageConfirmOrderButton.click();
+            await expect(page).toHaveURL(/payment_done/);
         })
     })
 
