@@ -1,6 +1,13 @@
-import { Page, Locator } from '@playwright/test'
+import { Page, Locator, expect } from '@playwright/test'
 import { BasePage } from './base.page';
 import { ProductsPage } from './products.page';
+import { HomePage } from './home.page';
+import { BaseUser } from '../utils/test-users';
+import { RegistrationPage } from './registration.page';
+import { LoginPage } from './login.page';
+import { AccountCreatedPage } from './accountCreated.page';
+import { CheckoutPage } from './checkout.page';
+import { PaymentDetailsPage } from './paymentDetails.page';
 
 export class CartPage extends BasePage {
     //TODO: change to Promise<number> when getProductTotalPrice() is finished
@@ -46,5 +53,61 @@ export class CartPage extends BasePage {
     async getProductTotalPrice(): Promise<number> {
         const priceText = this.cartProductPrice.innerText();
         return parseFloat((await priceText).replace('Rs. ', ''));
+    }
+
+    async checkoutCart(registered: Boolean, page: Page, productsPage: ProductsPage, homePage: HomePage, randomUser: BaseUser, registrationPage: RegistrationPage, loginPage: LoginPage, accountCreatedPage: AccountCreatedPage, checkoutPage: CheckoutPage, paymentDetailsPage: PaymentDetailsPage) {
+        if (!registered) {
+            await page.goto('/');
+            await productsPage.addProductToCart(1);
+            await homePage.cartPageNavButton.click();
+            await expect(page).toHaveURL('/view_cart');
+            await this.cartCheckoutButton.click();
+            await this.cartCheckoutRegistration.click();
+            await randomUser.createNewUserByGoingToSignupPage(registrationPage, loginPage);
+            await accountCreatedPage.accountCreatedContinueButton.click();
+            await expect(homePage.displayName).toBeVisible();
+            await homePage.cartPageNavButton.click();
+            await this.cartCheckoutButton.click();
+            await expect(checkoutPage.checkoutPageName).toHaveText(`. ${randomUser.firstName} ${randomUser.lastName}`);
+            await expect(checkoutPage.checkoutPageAddress).toHaveText(`${randomUser.address}`);
+            await expect(checkoutPage.checkoutPageCityStateZip).toHaveText(`${randomUser.city} ${randomUser.state} ${randomUser.zipCode}`);
+            await expect(checkoutPage.checkoutPageCountry).toHaveText('United States');
+            await expect(checkoutPage.checkoutPagePhoneNumber).toHaveText(`${randomUser.phoneNumber}`);
+            await checkoutPage.checkoutPageDescription.fill('x');
+            await checkoutPage.checkoutOutPagePlaceOrder.click();
+            await paymentDetailsPage.paymentDetailsPageCardName.fill(randomUser.name);
+            await paymentDetailsPage.paymentDetailsPageCardNumber.fill(randomUser.cardNumber);
+            await paymentDetailsPage.paymentDetailsPageCVC.fill(randomUser.cvc);
+            await paymentDetailsPage.paymentDetailsPageExpirationMonth.fill(randomUser.cardExpirationMonth);
+            await paymentDetailsPage.paymentDetailsPageExpirationYear.fill(randomUser.cardExpirationYear);
+            await paymentDetailsPage.paymentDetailsPageConfirmOrderButton.click();
+            await expect(page).toHaveURL(/payment_done/);
+            await homePage.deleteAccountButton.click();
+            await expect(page).toHaveURL('/delete_account');
+        }
+        else {
+            await page.goto('/');
+            await randomUser.createNewUserByGoingToSignupPage(registrationPage, loginPage);
+            await productsPage.addProductToCart(1);
+            await homePage.cartPageNavButton.click();
+            await expect(page).toHaveURL('/view_cart');
+            await this.cartCheckoutButton.click();
+            await expect(checkoutPage.checkoutPageName).toHaveText(`. ${randomUser.firstName} ${randomUser.lastName}`);
+            await expect(checkoutPage.checkoutPageAddress).toHaveText(`${randomUser.address}`);
+            await expect(checkoutPage.checkoutPageCityStateZip).toHaveText(`${randomUser.city} ${randomUser.state} ${randomUser.zipCode}`);
+            await expect(checkoutPage.checkoutPageCountry).toHaveText('United States');
+            await expect(checkoutPage.checkoutPagePhoneNumber).toHaveText(`${randomUser.phoneNumber}`);
+            await checkoutPage.checkoutPageDescription.fill('x');
+            await checkoutPage.checkoutOutPagePlaceOrder.click();
+            await paymentDetailsPage.paymentDetailsPageCardName.fill(randomUser.name);
+            await paymentDetailsPage.paymentDetailsPageCardNumber.fill(randomUser.cardNumber);
+            await paymentDetailsPage.paymentDetailsPageCVC.fill(randomUser.cvc);
+            await paymentDetailsPage.paymentDetailsPageExpirationMonth.fill(randomUser.cardExpirationMonth);
+            await paymentDetailsPage.paymentDetailsPageExpirationYear.fill(randomUser.cardExpirationYear);
+            await paymentDetailsPage.paymentDetailsPageConfirmOrderButton.click();
+            await expect(page).toHaveURL(/payment_done/);
+            await homePage.deleteAccountButton.click();
+            await expect(page).toHaveURL('/delete_account');
+        }
     }
 }

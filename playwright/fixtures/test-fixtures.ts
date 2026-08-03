@@ -19,6 +19,7 @@ type Pages = {
     registrationPage: RegistrationPage;
     accountCreatedPage: AccountCreatedPage;
     randomUser: BaseUser;
+    randomUserNoCleanup: BaseUser;
     registeredUser: BaseUser;
     contactUsPage: ContactUsPage;
     testCasesPage: TestCasesPage;
@@ -76,6 +77,9 @@ export const test = base.extend<Pages>({
         await homePage.deleteAccountButton.click()
         await expect(page).toHaveURL('/delete_account')
 
+    },
+    randomUserNoCleanup: async ({ }, use) => {
+        await use(new BaseUser());
     },
     registeredUser: async ({ page, randomUser }, use) => {
         //fill in registration 
