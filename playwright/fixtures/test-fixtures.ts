@@ -2,7 +2,7 @@ import { test as base, expect } from '@playwright/test';
 import { LoginPage } from '../pages/login.page';
 import { ProductsPage } from '../pages/products.page';
 import { ProductDetailsPage } from '../pages/productDetails.page';
-import { BaseUser } from '../utils/test-users';
+import { BaseUser, existingUser1, RegisteredUser } from '../utils/test-users';
 import { RegistrationPage } from '../pages/registration.page';
 import { ContactUsPage } from '../pages/contactUs.page';
 import { TestCasesPage } from '../pages/testCases.page';
@@ -81,11 +81,11 @@ export const test = base.extend<Pages>({
     randomUserNoCleanup: async ({ }, use) => {
         await use(new BaseUser());
     },
-    registeredUser: async ({ page, randomUser }, use) => {
+    registeredUser: async ({ page, loginPage }, use) => {
         //fill in registration 
-        await page.goto("/login")
-        await use(randomUser);
-
+        await page.goto("/login");
+        await loginPage.login(existingUser1.email, existingUser1.password);
+        await use(new RegisteredUser());
     }
 });
 

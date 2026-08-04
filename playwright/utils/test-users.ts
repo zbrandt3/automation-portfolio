@@ -1,6 +1,12 @@
 import { LoginPage } from "../pages/login.page";
 import { RegistrationPage } from "../pages/registration.page";
 
+export const existingUser1 = {
+    email: "zaneqa@gmail.com",
+    password: "QATest1!",
+    name: "zane",
+}
+
 export class BaseUser {
     public email: string;
     public password: string;
@@ -82,8 +88,19 @@ export class BaseUser {
     }
 }
 
-export const existingUser1 = {
-    email: "zaneqa@gmail.com",
-    password: "QATest1!",
-    name: "zane",
+export class RegisteredUser extends BaseUser {
+    constructor() {
+        super();
+        this.email = existingUser1.email;
+        this.password = existingUser1.password;
+        this.name = existingUser1.name;
+        this.firstName = 'z'
+        this.lastName = 'z'
+        this.address = "z";
+        this.country = "India";
+        this.state = "z";
+        this.city = "z";
+        this.zipCode = "1";
+        this.phoneNumber = "1";
+    }
 }

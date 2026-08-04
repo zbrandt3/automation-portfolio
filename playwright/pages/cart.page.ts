@@ -82,8 +82,6 @@ export class CartPage extends BasePage {
             await paymentDetailsPage.paymentDetailsPageExpirationYear.fill(randomUser.cardExpirationYear);
             await paymentDetailsPage.paymentDetailsPageConfirmOrderButton.click();
             await expect(page).toHaveURL(/payment_done/);
-            await homePage.deleteAccountButton.click();
-            await expect(page).toHaveURL('/delete_account');
         }
         else {
             await page.goto('/');
@@ -106,8 +104,6 @@ export class CartPage extends BasePage {
             await paymentDetailsPage.paymentDetailsPageExpirationYear.fill(randomUser.cardExpirationYear);
             await paymentDetailsPage.paymentDetailsPageConfirmOrderButton.click();
             await expect(page).toHaveURL(/payment_done/);
-            await homePage.deleteAccountButton.click();
-            await expect(page).toHaveURL('/delete_account');
         }
     }
 }
