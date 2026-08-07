@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/test-fixtures'
-import { CartPage } from '../pages/cart.page';
+import { existingUser1 } from '../utils/test-users';
 
 test.describe('Check cart page', () => {
     test('subscribe with email on cart page', async ({ cartPage, homePage }) => {
@@ -35,5 +35,58 @@ test.describe('Check cart page', () => {
         await productDetailsPage.productDetailsConfirmItemAdded.click();
         await homePage.cartPageNavButton.click();
         await expect(cartPage.cartProductQuantityButton).toHaveText('3');
+    })
+
+    test.describe('checkout', async () => {
+        test('register while checkout', async ({ page, productsPage, homePage, cartPage, randomUserNoCleanup, registrationPage, loginPage, accountCreatedPage, checkoutPage, paymentDetailsPage }) => {
+            await cartPage.checkoutCart(
+                false,
+                page,
+                productsPage,
+                homePage,
+                randomUserNoCleanup,
+                registrationPage,
+                loginPage,
+                accountCreatedPage,
+                checkoutPage,
+                paymentDetailsPage
+            );
+        })
+        test('register before checkout', async ({ page, productsPage, homePage, cartPage, randomUserNoCleanup, registrationPage, loginPage, accountCreatedPage, checkoutPage, paymentDetailsPage }) => {
+            await cartPage.checkoutCart(
+                true,
+                page,
+                productsPage,
+                homePage,
+                randomUserNoCleanup,
+                registrationPage,
+                loginPage,
+                accountCreatedPage,
+                checkoutPage,
+                paymentDetailsPage
+            );
+        })
+        test('existing account checkout', async ({ page, registeredUser, homePage, productsPage, cartPage, checkoutPage, paymentDetailsPage }) => {
+            await page.goto('/');
+            await expect(homePage.displayName).toHaveText(registeredUser.name);
+            await productsPage.addProductToCart(1);
+            await homePage.cartPageNavButton.click();
+            await expect(page).toHaveURL('/view_cart');
+            await cartPage.cartCheckoutButton.click();
+            await expect(checkoutPage.checkoutPageName).toHaveText(`. ${registeredUser.firstName} ${registeredUser.lastName}`);
+            await expect(checkoutPage.checkoutPageAddress).toHaveText(`${registeredUser.address}`);
+            await expect(checkoutPage.checkoutPageCityStateZip).toHaveText(`${registeredUser.city} ${registeredUser.state} ${registeredUser.zipCode}`);
+            await expect(checkoutPage.checkoutPageCountry).toHaveText(registeredUser.country);
+            await expect(checkoutPage.checkoutPagePhoneNumber).toHaveText(`${registeredUser.phoneNumber}`);
+            await checkoutPage.checkoutPageDescription.fill('x');
+            await checkoutPage.checkoutOutPagePlaceOrder.click();
+            await paymentDetailsPage.paymentDetailsPageCardName.fill(registeredUser.name);
+            await paymentDetailsPage.paymentDetailsPageCardNumber.fill(registeredUser.cardNumber);
+            await paymentDetailsPage.paymentDetailsPageCVC.fill(registeredUser.cvc);
+            await paymentDetailsPage.paymentDetailsPageExpirationMonth.fill(registeredUser.cardExpirationMonth);
+            await paymentDetailsPage.paymentDetailsPageExpirationYear.fill(registeredUser.cardExpirationYear);
+            await paymentDetailsPage.paymentDetailsPageConfirmOrderButton.click();
+            await expect(page).toHaveURL(/payment_done/);
+        })
     })
 })

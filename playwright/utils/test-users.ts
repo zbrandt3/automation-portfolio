@@ -1,3 +1,12 @@
+import { LoginPage } from "../pages/login.page";
+import { RegistrationPage } from "../pages/registration.page";
+
+export const existingUser1 = {
+    email: "zaneqa@gmail.com",
+    password: "QATest1!",
+    name: "zane",
+}
+
 export class BaseUser {
     public email: string;
     public password: string;
@@ -11,6 +20,10 @@ export class BaseUser {
     public city: string;
     public zipCode: string;
     public phoneNumber: string;
+    public cardNumber: string;
+    public cvc: string;
+    public cardExpirationMonth: string;
+    public cardExpirationYear: string;
 
     constructor() {
         this.email = this.createEmail();
@@ -25,6 +38,10 @@ export class BaseUser {
         this.zipCode = "123456";
         this.dateOfBirth = ['27', 'July', '1990'];
         this.phoneNumber = "1234567890";
+        this.cardNumber = "1234567890123456";
+        this.cvc = "123";
+        this.cardExpirationMonth = "12";
+        this.cardExpirationYear = "2069";
     }
 
 
@@ -45,10 +62,45 @@ export class BaseUser {
         //adding number and symbol to fit criteria
         return password += "1!"
     }
+
+    async createNewUser(registrationPage: RegistrationPage, loginPage: LoginPage) {
+        await loginPage.registrationSignupEmail.fill(this.email);
+        await loginPage.registrationSignupName.fill(this.name);
+        await loginPage.registrationSignUpButton.click();
+
+        //registration page
+        await registrationPage.registrationPassword.fill(this.password);
+        await registrationPage.registrationFirstName.fill(this.firstName);
+        await registrationPage.registrationLastName.fill(this.lastName);
+        await registrationPage.registrationAddress.fill(this.address);
+        await registrationPage.registrationCountry.selectOption(this.country);
+        await registrationPage.registrationCity.fill(this.city);
+        await registrationPage.registrationState.fill(this.state);
+        await registrationPage.registrationAddress.fill(this.address);
+        await registrationPage.registrationZipCode.fill(this.zipCode);
+        await registrationPage.registrationPhoneNumber.fill(this.phoneNumber);
+        await registrationPage.registrationCreateAccountButton.click();
+    }
+
+    async createNewUserByGoingToSignupPage(registrationPage: RegistrationPage, loginPage: LoginPage) {
+        await registrationPage.goto('signup');
+        await this.createNewUser(registrationPage, loginPage);
+    }
 }
 
-export const existingUser1 = {
-    email: "zaneqa@gmail.com",
-    password: "QATest1!",
-    name: "zane",
+export class RegisteredUser extends BaseUser {
+    constructor() {
+        super();
+        this.email = existingUser1.email;
+        this.password = existingUser1.password;
+        this.name = existingUser1.name;
+        this.firstName = 'z'
+        this.lastName = 'z'
+        this.address = "z";
+        this.country = "India";
+        this.state = "z";
+        this.city = "z";
+        this.zipCode = "1";
+        this.phoneNumber = "1";
+    }
 }
