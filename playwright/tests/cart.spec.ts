@@ -36,6 +36,16 @@ test.describe('Check cart page', () => {
         await homePage.cartPageNavButton.click();
         await expect(cartPage.cartProductQuantityButton).toHaveText('3');
     })
+    test('remove product from cart', async ({ cartPage, homePage, productsPage }) => {
+        await cartPage.goto('/');
+        await productsPage.addProductToCart(1);
+        await productsPage.addProductToCart(2);
+        await cartPage.setCartID(1);
+        await homePage.cartPageNavButton.click();
+        await expect(cartPage.cartProductTableRows).toHaveCount(2);
+        await cartPage.cartRemoveItemButton.click();
+        await expect(cartPage.cartProductTableRows).toHaveCount(1);
+    })
 
     test.describe('checkout', async () => {
         test('register while checkout', async ({ page, productsPage, homePage, cartPage, randomUserNoCleanup, registrationPage, loginPage, accountCreatedPage, checkoutPage, paymentDetailsPage }) => {

@@ -26,6 +26,7 @@ export class CartPage extends BasePage {
     readonly cartProductTotalPriceText: Locator;
     readonly cartCheckoutButton: Locator;
     readonly cartCheckoutRegistration: Locator;
+    readonly cartRemoveItemButton: Locator;
 
     constructor(page: Page) {
         super(page);
@@ -43,6 +44,7 @@ export class CartPage extends BasePage {
 
         this.cartCheckoutButton = page.getByText('Proceed To Checkout');
         this.cartCheckoutRegistration = page.getByRole('link', { name: 'Register / Login' });
+        this.cartRemoveItemButton = page.locator('.cart_quantity_delete').nth(this.cartId - 1);
     }
 
     async setCartID(id: number) {
