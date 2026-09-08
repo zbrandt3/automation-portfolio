@@ -16,6 +16,11 @@ export class HomePage extends BasePage {
     readonly subscriptionSuccessMessage: Locator;
     readonly cartPageNavButton: Locator;
     readonly homeViewProduct: Locator;
+    readonly categoryCategoryPanel: Locator;
+    readonly categoryWomenSelection: Locator;
+    readonly categoryMenSelection: Locator;
+    readonly womenCategoryDress: Locator;
+    readonly menCategoryTshirts: Locator;
 
     readonly logoutButton: Locator;
     readonly displayName: Locator;
@@ -37,6 +42,11 @@ export class HomePage extends BasePage {
         this.subscriptionSuccessMessage = page.locator('#success-subscribe');
         this.cartPageNavButton = page.locator('header a[href="/view_cart"]')
         this.homeViewProduct = page.locator(`a[href="/product_details/${this.homeId}"]`);
+        this.categoryCategoryPanel = page.locator('.category-products');
+        this.categoryWomenSelection = page.locator('#Women')
+        this.womenCategoryDress = page.locator('#Women li').first();
+        this.categoryMenSelection = page.locator('#Men')
+        this.menCategoryTshirts = page.locator('#Men li').first();
     }
 
     async setHomeID(id: number) {
