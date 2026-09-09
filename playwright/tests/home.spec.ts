@@ -9,3 +9,23 @@ test.describe('Home page', () => {
         await expect(homePage.subscriptionSuccessMessage).toBeVisible();
     })
 })
+
+test.describe('Category navigation', () => {
+    test('check women category', async ({ homePage, productsPage }) => {
+        await homePage.goto('/');
+        await expect(homePage.categoryCategoryPanel).toBeVisible();
+        await homePage.categoryWomenSelection.click();
+        await expect(homePage.womenCategoryDress).toBeVisible();
+        await homePage.womenCategoryDress.click();
+        await expect(productsPage.productHeader).toContainText('Dress');
+    })
+    test('check men category', async ({ homePage, productsPage }) => {
+        await homePage.goto('/');
+        await expect(homePage.categoryCategoryPanel).toBeVisible();
+        await homePage.categoryMenSelection.click();
+        await expect(homePage.menCategoryTshirts).toBeVisible();
+        await homePage.menCategoryTshirts.click();
+        await expect(productsPage.productHeader).toContainText('Tshirts');
+
+    })
+})
