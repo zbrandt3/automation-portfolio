@@ -43,10 +43,10 @@ export class HomePage extends BasePage {
         this.cartPageNavButton = page.locator('header a[href="/view_cart"]')
         this.homeViewProduct = page.locator(`a[href="/product_details/${this.homeId}"]`);
         this.categoryCategoryPanel = page.locator('.category-products');
-        this.categoryWomenSelection = page.locator('#Women')
-        this.womenCategoryDress = page.locator('#Women li').first();
-        this.categoryMenSelection = page.locator('#Men')
-        this.menCategoryTshirts = page.locator('#Men li').first();
+        this.categoryWomenSelection = page.locator('[href="#Women"]')
+        this.womenCategoryDress = page.locator('#Women li a').first();
+        this.categoryMenSelection = page.locator('[href="#Men"]');
+        this.menCategoryTshirts = page.locator('#Men li a').first();
     }
 
     async setHomeID(id: number) {

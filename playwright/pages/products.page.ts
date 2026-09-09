@@ -14,6 +14,8 @@ export class ProductsPage extends BasePage {
     readonly productItemAddedPopoverButton: Locator;
     readonly productSearchedProducts: Locator;
 
+    readonly productHeader: Locator;
+
 
     constructor(page: Page, productId = 1, searchProductText = 'test') {
         super(page);
@@ -27,6 +29,7 @@ export class ProductsPage extends BasePage {
         this.productViewItem = page.locator(`a[href="/product_details/${productId}"]`);
         this.productItemAddedPopoverButton = page.getByRole('button', { name: 'Continue Shopping' });
         this.productSearchedProducts = page.locator('h2').getByText('Searched Products');
+        this.productHeader = page.locator('h2.title.text-center');
 
     }
 
