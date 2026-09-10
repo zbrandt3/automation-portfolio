@@ -6,9 +6,9 @@ test.describe('Validating login', () => {
         await loginPage.goto('/');
         await expect(homePage.logo).toBeVisible();
     })
-    test('invalid login', async ({ loginPage, randomUser }) => {
+    test('invalid login', async ({ loginPage, randomUserNoCleanup }) => {
         await loginPage.goto(loginPage.url);
-        await loginPage.login(randomUser.email, randomUser.password);
+        await loginPage.login(randomUserNoCleanup.email, randomUserNoCleanup.password);
         //locator uses text, this visibility means correct error text
         await expect(loginPage.loginError).toBeVisible();
         await expect(loginPage.loginError).toHaveCSS('color', 'rgb(255, 0, 0)');
