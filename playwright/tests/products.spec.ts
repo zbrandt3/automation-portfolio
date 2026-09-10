@@ -1,4 +1,5 @@
 import { test, expect } from "../fixtures/test-fixtures";
+import { HomePage } from "../pages/home.page";
 import { ProductDetailsPage } from "../pages/productDetails.page";
 import { ProductsPage } from "../pages/products.page";
 
@@ -54,5 +55,22 @@ test.describe('Check products page', async () => {
         await specificSearch.searchProduct(searchText);
         await expect(specificSearch.productSearchedProducts).toBeVisible();
         await expect(specificSearch.productItemList).toContainText(searchText, { ignoreCase: true });
+    })
+})
+
+test.describe('search brand', () => {
+    test('search polo brand', async ({ homePage, productsPage }) => {
+        await homePage.goto('/');
+        await homePage.productsPageNavButton.click();
+        await expect(homePage.brandsPolo).toBeVisible();
+        await homePage.brandsPolo.click();
+        await expect(productsPage.productHeader).toContainText('Polo');
+    })
+    test('search H&M brand', async ({ homePage, productsPage }) => {
+        await homePage.goto('/');
+        await homePage.productsPageNavButton.click();
+        await expect(homePage.brandsHandM).toBeVisible();
+        await homePage.brandsHandM.click();
+        await expect(productsPage.productHeader).toContainText('H&M');
     })
 })
