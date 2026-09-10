@@ -21,6 +21,8 @@ export class HomePage extends BasePage {
     readonly categoryMenSelection: Locator;
     readonly womenCategoryDress: Locator;
     readonly menCategoryTshirts: Locator;
+    readonly brandsPolo: Locator;
+    readonly brandsHandM: Locator;
 
     readonly logoutButton: Locator;
     readonly displayName: Locator;
@@ -47,6 +49,8 @@ export class HomePage extends BasePage {
         this.womenCategoryDress = page.locator('#Women li a').first();
         this.categoryMenSelection = page.locator('[href="#Men"]');
         this.menCategoryTshirts = page.locator('#Men li a').first();
+        this.brandsPolo = page.locator('[href="/brand_products/Polo"]');
+        this.brandsHandM = page.locator('[href="/brand_products/H&M"]');
     }
 
     async setHomeID(id: number) {
