@@ -5,7 +5,7 @@ import { HomePage } from "./home.page";
 export class ProductsPage extends BasePage {
 
     public productId: number;
-    protected searchProductText: string;
+    public searchProductText: string;
 
     readonly productsSearchBar: Locator;
     readonly productsSubmitSearch: Locator;
@@ -17,16 +17,16 @@ export class ProductsPage extends BasePage {
     readonly productHeader: Locator;
 
 
-    constructor(page: Page, productId = 1, searchProductText = 'test') {
+    constructor(page: Page) {
         super(page);
         //allow for searching of specific products, default to first item
-        this.productId = productId;
-        this.searchProductText = searchProductText;
+        this.productId = 1;
+        this.searchProductText = 'test';
 
         this.productsSearchBar = page.locator('#search_product');
         this.productsSubmitSearch = page.locator('#submit_search');
         this.productItemList = page.locator('.features_items');
-        this.productViewItem = page.locator(`a[href="/product_details/${productId}"]`);
+        this.productViewItem = page.locator(`a[href="/product_details/${this.productId}"]`);
         this.productItemAddedPopoverButton = page.getByRole('button', { name: 'Continue Shopping' });
         this.productSearchedProducts = page.locator('h2').getByText('Searched Products');
         this.productHeader = page.locator('h2.title.text-center');
@@ -36,9 +36,12 @@ export class ProductsPage extends BasePage {
     async setProductID(id: number) {
         this.productId = id;
     }
+    async setSearchText(searchText: string) {
+        this.searchProductText = searchText;
+    }
 
-    async searchProduct(product: string) {
-        await this.productsSearchBar.fill(product);
+    async searchProduct() {
+        await this.productsSearchBar.fill(this.searchProductText);
         await this.productsSubmitSearch.click()
     }
 

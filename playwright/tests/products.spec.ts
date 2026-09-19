@@ -4,8 +4,8 @@ import { ProductDetailsPage } from "../pages/productDetails.page";
 import { ProductsPage } from "../pages/products.page";
 
 //specific item number search
-const productId = 4;
-const searchText = 'blue';
+//const productId = 4;
+//const searchText = 'blue';
 
 test.describe('Check products page', async () => {
     test('View first product', async ({ page, productsPage, productDetailsPage, homePage }) => {
@@ -41,20 +41,23 @@ test.describe('Check products page', async () => {
         await expect(nProductDetailsPage.productDetailsPageBrand).toBeVisible();
     })
     test('Search product', async ({ productsPage, page, homePage }) => {
+        await productsPage.setSearchText('blue');
+        await productsPage.setProductID(4);
         await productsPage.goto('/');
         await homePage.productsPageNavButton.click();
         await expect(page).toHaveURL('/products');
-        await productsPage.searchProduct(searchText);
+        await productsPage.searchProduct();
         await expect(productsPage.productSearchedProducts).toBeVisible();
     })
-    test('Search specific product', async ({ page, homePage }) => {
-        const specificSearch = new ProductsPage(page, productId, searchText)
-        await specificSearch.goto('/');
+    test('Search specific product', async ({ page, homePage, productsPage }) => {
+        await productsPage.setSearchText('blue');
+        await productsPage.setProductID(4);
+        await productsPage.goto('/');
         await homePage.productsPageNavButton.click();
         await expect(page).toHaveURL('/products');
-        await specificSearch.searchProduct(searchText);
-        await expect(specificSearch.productSearchedProducts).toBeVisible();
-        await expect(specificSearch.productItemList).toContainText(searchText, { ignoreCase: true });
+        await productsPage.searchProduct();
+        await expect(productsPage.productSearchedProducts).toBeVisible();
+        await expect(productsPage.productItemList).toContainText(productsPage.searchProductText, { ignoreCase: true });
     })
 })
 

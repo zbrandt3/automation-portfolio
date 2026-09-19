@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/test-fixtures'
-import { existingUser1 } from '../utils/test-users';
+import { ProductsPage } from '../pages/products.page';
 
 test.describe('Check cart page', () => {
     test('subscribe with email on cart page', async ({ cartPage, homePage }) => {
@@ -47,6 +47,18 @@ test.describe('Check cart page', () => {
         await expect(cartPage.cartProductTableRows).toHaveCount(1);
     })
 
+    test.describe('retain cart after sign in', async () => {
+        test('add to cart and sign in', async ({ productsPage, cartPage, homePage, page }) => {
+            await productsPage.setSearchText('blue');
+            await productsPage.setProductID(4);
+            await productsPage.goto('/');
+            await homePage.productsPageNavButton.click();
+            await expect(page).toHaveURL('/products');
+            await productsPage.searchProduct();
+            await expect(productsPage.productSearchedProducts).toBeVisible();
+            await expect(productsPage.productItemList).toContainText(productsPage.searchProductText, { ignoreCase: true });
+        })
+    })
     test.describe('checkout', async () => {
         test('register while checkout', async ({ page, productsPage, homePage, cartPage, randomUserNoCleanup, registrationPage, loginPage, accountCreatedPage, checkoutPage, paymentDetailsPage }) => {
             await cartPage.checkoutCart(
